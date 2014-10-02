@@ -38,6 +38,7 @@ class ListingsViewController: UIViewController {
         RAC(self, "saleArtworks") <~ XAppRequest(endpoint, parameters: endpoint.defaultParameters).filterSuccessfulStatusCodes().mapJSON().mapToObjectArray(SaleArtwork.self).doNext({ [weak self] (_) -> Void in
             let collectionView = self?.collectionView
             collectionView?.reloadData()
+
         }).catch({ (error) -> RACSignal! in
             println("Error handling thing: \(error.localizedDescription)")
             return RACSignal.empty()
