@@ -45,14 +45,13 @@ class CardHandler: NSObject, CFTReaderDelegate {
 
 
             }, failure: { (error) -> Void in
-                self.cardSwipedSignal.sendNext("Card Flight Error: \(error)");
+                self.cardSwipedSignal.sendNext("Card Flight Error: \(error.localizedDescription)");
                 logger.error("Card was not tokenizable")
             })
             
         } else if let error = error {
-            self.cardSwipedSignal.sendNext("response Error");
+            self.cardSwipedSignal.sendNext("response Error: \(error.localizedDescription)");
             logger.error("CardReader got a response it cannot handle")
-
 
             reader.beginSwipeWithMessage(nil);
         }
@@ -90,7 +89,7 @@ class CardHandler: NSObject, CFTReaderDelegate {
 
         } else {
             if (error != nil) {
-                cardSwipedSignal.sendNext("Reader is disconnected: \(error.localizedDescription)");
+                cardSwipedSignal.sendNext("Reader is disconnected: \(error.localizedDescription) - \(error)");
             } else {
                 cardSwipedSignal.sendNext("Reader is disconnected");
             }

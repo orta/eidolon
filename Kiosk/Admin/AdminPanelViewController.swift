@@ -32,11 +32,14 @@ class AdminPanelViewController: UIViewController {
         }
     }
 
-    override func viewDidLoad() {
+    override func viewDidLoad() {1
         super.viewDidLoad()
         let state = AppSetup.sharedState
 
-        auctionIDLabel.text = state.auctionID
+        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as String?
+        let build = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as String?
+
+        auctionIDLabel.text = "\(state.auctionID) - \(version!) - \(build!)"
 
         let environment = state.useStaging ? "PRODUCTION" : "STAGING"
         environmentChangeButton.setTitle("USE \(environment)", forState: .Normal)
